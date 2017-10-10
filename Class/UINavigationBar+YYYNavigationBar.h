@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface UINavigationBar (YYYNavigationBar)
 
 - (void)yyy_updateBarAlpha:(CGFloat)barBackgroundAlpha;

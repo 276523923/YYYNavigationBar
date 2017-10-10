@@ -22,15 +22,13 @@
     if (@available(iOS 11.0, *)) {
         self.navigationController.navigationBar.prefersLargeTitles = YES;
         self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAutomatic;
-    } else {
-        // Fallback on earlier versions
     }
-    
+ 
     self.view.backgroundColor = [UIColor whiteColor];
-    self.yyy_navigationBarBarTintColor = [UIColor redColor];
+    self.yyy_navigationBarBarTintColor = [UIColor whiteColor];
     self.yyy_navigationBarShadowImageColor = [UIColor redColor];
-    self.yyy_customBarBackgroundView = [BarBackgroundView new];
-    self.yyy_customBarBackgroundView.alpha = 0.8;
+//    self.yyy_customBarBackgroundView = [BarBackgroundView new];
+//    self.yyy_customBarBackgroundView.alpha = 0.8;
     
 //    self.yyy_navigationBarShadowImageColor = [UIColor redColor];
 //    self.yyy_navigationBarTintColor = [UIColor blackColor];

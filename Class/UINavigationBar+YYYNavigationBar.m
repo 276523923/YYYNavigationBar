@@ -12,7 +12,6 @@
 @interface UIView(YYYNavigationBar)
 
 @property (nonatomic, strong) UIColor *yyy_custom_backgroundColor;
-@property (nonatomic, strong) NSNumber *yyy_custom_alpha;
 
 @end
 
@@ -21,7 +20,6 @@
 + (void)load
 {
     SwapSEL(self, @selector(setBackgroundColor:), @selector(yyy_setBackgroundColor:));
-    SwapSEL(self, @selector(setAlpha:), @selector(yyy_setAlpha:));
 }
 
 - (void)yyy_setBackgroundColor:(UIColor *)backgroundColor
@@ -36,18 +34,6 @@
     }
 }
 
-- (void)yyy_setAlpha:(CGFloat)alpha
-{
-    if (self.yyy_custom_alpha)
-    {
-        [self yyy_setAlpha:self.yyy_custom_alpha.doubleValue];
-    }
-    else
-    {
-        [self yyy_setAlpha:alpha];
-    }
-}
-
 - (UIColor *)yyy_custom_backgroundColor
 {
     return objc_getAssociatedObject(self, @selector(yyy_custom_backgroundColor));
@@ -59,59 +45,19 @@
     self.backgroundColor = yyy_custom_backgroundColor;
 }
 
-- (NSNumber *)yyy_custom_alpha
-{
-    return objc_getAssociatedObject(self, @selector(yyy_custom_alpha));
-}
-
-- (void)setYyy_custom_alpha:(NSNumber *)yyy_custom_alpha
-{
-    objc_setAssociatedObject(self, @selector(yyy_custom_alpha), yyy_custom_alpha, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    self.alpha = yyy_custom_alpha.doubleValue;
-}
-
 @end
 
-//@interface UINavigationBar ()
-//
-//@property (nonatomic) CGFloat customHeight;
-//
-//@end
-
 @implementation UINavigationBar (YYYNavigationBar)
-
-+ (void)load
-{
-    
-}
 
 - (void)yyy_updateBarAlpha:(CGFloat)barBackgroundAlpha
 {
     UIView *barBackgroundView = [self yyy_UIBarBackgroundView];
-    barBackgroundView.yyy_custom_alpha = @(barBackgroundAlpha);
+    barBackgroundView.alpha = barBackgroundAlpha;
 }
 
 - (void)yyy_updateBarHeight:(CGFloat)height
 {
-    //    CGRect frame = self.navigationBar.frame;
-    //    frame.size.height = height;
-    //    self.navigationBar.customHeight = height;
-    //    self.navigationBar.frame = frame;
-    //    CGFloat aaa=  [self.navigationBar.topItem.rightBarButtonItem backgroundVerticalPositionAdjustmentForBarMetrics:UIBarMetricsDefault];
-    //    [self.navigationBar.topItem.rightBarButtonItem setBackgroundVerticalPositionAdjustment:20 forBarMetrics:UIBarMetricsDefault];
-    //
-    //
-    //    UIView *view = self.navigationBar.subviews.firstObject;
-    //    frame = view.frame;
-    //    frame.size.height = height - frame.origin.y;
-    //    view.frame = frame;
-    //    LayoutView(self.navigationBar);
-    
-    //    self.navigationBar.frame = frame;
-    //
-    //    [self.navigationBar layoutIfNeeded];
-    //    [self.navigationBar setNeedsLayout];
-    
+
 }
 
 - (void)yyy_updateBarTintColor:(UIColor *)tintColor

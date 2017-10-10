@@ -79,7 +79,7 @@ static CGFloat yyy_customToViewAlpha = 0;
         if (fromVCView)
         {
             toVCView.frame = fromVCView.frame;
-//            toVCView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+            toVCView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
             [[self.navigationBar yyy_UIBarBackgroundView] insertSubview:toVCView belowSubview:fromVCView];
             toVCView.alpha = 0;
         }
@@ -105,7 +105,7 @@ static CGFloat yyy_customToViewAlpha = 0;
             UIView *toVCView = toVC.yyy_customBarBackgroundView;
             toVCView.alpha = 0;
             
-            CGFloat toViewAlpha = toVC.yyy_navigationBarAlpha == 0? 0:yyy_customToViewAlpha;
+            CGFloat toViewAlpha = yyy_customToViewAlpha;
             CGFloat effectViewAlpha = toVCView? 0:1;
             UIColor *barTintColor = toVC.yyy_navigationBarBarTintColor;
             UIColor *shadowColor = toVC.yyy_navigationBarShadowImageColor;
@@ -113,6 +113,7 @@ static CGFloat yyy_customToViewAlpha = 0;
             if (fromVC.yyy_navigationBarAlpha == 0)
             {
                 fromVCView.alpha = 0;
+                self.navigationBar.yyy_backgroundEffectView.alpha = 0;
                 [self.navigationBar yyy_updateBarBarTintColor:toVC.yyy_navigationBarBarTintColor];
                 [self.navigationBar yyy_updateBarShadowImageColor:toVC.yyy_navigationBarShadowImageColor];
             }
@@ -120,6 +121,7 @@ static CGFloat yyy_customToViewAlpha = 0;
             if (toVC.yyy_navigationBarAlpha == 0)
             {
                 effectViewAlpha = 0;
+                toViewAlpha = 0;
                 shadowColor = fromVC.yyy_navigationBarShadowImageColor;
                 barTintColor = fromVC.yyy_navigationBarBarTintColor;
             }
@@ -127,13 +129,10 @@ static CGFloat yyy_customToViewAlpha = 0;
             if (fromVCView && toVCView)
             {
                 toVCView.frame = fromVCView.frame;
-                toVCView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-                [[self.navigationBar yyy_UIBarBackgroundView] insertSubview:toVCView aboveSubview:fromVCView];
             }
             else if (toVCView)
             {
                 barTintColor = fromVC.yyy_navigationBarBarTintColor;
-                [self.navigationBar yyy_updateBackgroundView:toVC.yyy_customBarBackgroundView];
             }
             else if (fromVCView)
             {
@@ -144,7 +143,6 @@ static CGFloat yyy_customToViewAlpha = 0;
                 fromVCView.alpha = 0;
                 toVCView.alpha = toViewAlpha;
                 self.navigationBar.yyy_backgroundEffectView.alpha = effectViewAlpha;
-            
                 [self.navigationBar yyy_updateBarAlpha:toVC.yyy_navigationBarAlpha];
                 [self.navigationBar yyy_updateBarTintColor:toVC.yyy_navigationBarTintColor];
                 [self.navigationBar yyy_updateBarTitleColor:toVC.yyy_navigationBarTitleColor];
@@ -398,13 +396,7 @@ static CGFloat yyy_customToViewAlpha = 0;
     if (fromVCView && toVCView)
     {
         effectViewAlpha = 0;
-        if (![[self.navigationBar yyy_UIBarBackgroundView].subviews containsObject:toVCView])
-        {
-            toVCView.frame = fromVCView.frame;
-            toVCView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-            [[self.navigationBar yyy_UIBarBackgroundView] insertSubview:toVCView belowSubview:fromVCView];
-            toVCView.alpha = 0;
-        }
+        toVCView.frame = fromVCView.frame;
     }
     else if (toVCView)
     {

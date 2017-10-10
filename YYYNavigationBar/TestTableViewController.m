@@ -25,8 +25,8 @@
     self.yyy_navigationBarTitleColor = [UIColor redColor];
     
     self.yyy_navigationBarShadowImageColor = [UIColor cyanColor];
-    self.yyy_navigationBarBarTintColor = [UIColor greenColor];
-    self.yyy_navigationBarAlpha = 0;
+    self.yyy_navigationBarBarTintColor = [UIColor whiteColor];
+//    self.yyy_navigationBarAlpha = 0;
   
     self.yyy_backgroundImage = [UIImage imageNamed:@"imageNav"];
 //    self.navigationItem.titleView =({
@@ -70,9 +70,9 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    self.yyy_navigationBarAlpha = (scrollView.contentOffset.y + scrollView.contentInset.top)/100.f;
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    self.yyy_navigationBarAlpha = (scrollView.contentOffset.y + scrollView.contentInset.top)/100.f;
+//}
 
 @end
