@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface UINavigationController (YYYNavigationBar)
 
-@property (nonatomic, weak, readonly) UIViewController *yyy_currentShowController;
+@property (nonatomic, weak, readonly) UIViewController *yyy_currentShowController;/**< 当前显示的VC */
+@property (nonatomic, copy)  void(^yyy_viewControllerTransitionAnimationsBlock)(UIViewController *fromViewController,UIViewController *toViewController,CGFloat transitionDuration);
+@property (nonatomic, copy) void(^yyy_transitionCompleteBlock)(UIViewController *toViewController);
+@property (nonatomic, weak) id<UINavigationControllerDelegate> yyy_delegate;
 
-@end
+@end 

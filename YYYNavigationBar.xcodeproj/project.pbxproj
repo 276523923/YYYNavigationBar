@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A70120551F6F5AB100855647 /* UINavigationBar+YYYNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A70120541F6F5AB100855647 /* UINavigationBar+YYYNavigationBar.m */; };
+		A7310EA21F7DEB120076BDD4 /* YYYNavigationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A7310EA11F7DEB120076BDD4 /* YYYNavigationManager.m */; };
+		A77FA1C41F7F4E6F0010BA4B /* BarBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A77FA1C31F7F4E6F0010BA4B /* BarBackgroundView.m */; };
 		A7CF72491F6B814400E73CF8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A7CF72481F6B814400E73CF8 /* AppDelegate.m */; };
 		A7CF724C1F6B814400E73CF8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7CF724B1F6B814400E73CF8 /* ViewController.m */; };
 		A7CF724F1F6B814400E73CF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7CF724D1F6B814400E73CF8 /* Main.storyboard */; };
@@ -23,6 +25,10 @@
 		A70120531F6F5AB100855647 /* UINavigationBar+YYYNavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+YYYNavigationBar.h"; sourceTree = "<group>"; };
 		A70120541F6F5AB100855647 /* UINavigationBar+YYYNavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+YYYNavigationBar.m"; sourceTree = "<group>"; };
 		A70120561F6F61E300855647 /* YYYNavigationHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYYNavigationHelper.h; sourceTree = "<group>"; };
+		A7310EA01F7DEB120076BDD4 /* YYYNavigationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYYNavigationManager.h; sourceTree = "<group>"; };
+		A7310EA11F7DEB120076BDD4 /* YYYNavigationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYYNavigationManager.m; sourceTree = "<group>"; };
+		A77FA1C21F7F4E6F0010BA4B /* BarBackgroundView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarBackgroundView.h; sourceTree = "<group>"; };
+		A77FA1C31F7F4E6F0010BA4B /* BarBackgroundView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarBackgroundView.m; sourceTree = "<group>"; };
 		A7CF72441F6B814400E73CF8 /* YYYNavigationBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YYYNavigationBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7CF72471F6B814400E73CF8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A7CF72481F6B814400E73CF8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -76,13 +82,15 @@
 				A7CF72481F6B814400E73CF8 /* AppDelegate.m */,
 				A7CF724A1F6B814400E73CF8 /* ViewController.h */,
 				A7CF724B1F6B814400E73CF8 /* ViewController.m */,
+				A7CF72641F6BB3B600E73CF8 /* TestTableViewController.h */,
+				A7CF72651F6BB3B600E73CF8 /* TestTableViewController.m */,
 				A7CF724D1F6B814400E73CF8 /* Main.storyboard */,
 				A7CF72501F6B814400E73CF8 /* Assets.xcassets */,
 				A7CF72521F6B814400E73CF8 /* LaunchScreen.storyboard */,
 				A7CF72551F6B814400E73CF8 /* Info.plist */,
 				A7CF72561F6B814400E73CF8 /* main.m */,
-				A7CF72641F6BB3B600E73CF8 /* TestTableViewController.h */,
-				A7CF72651F6BB3B600E73CF8 /* TestTableViewController.m */,
+				A77FA1C21F7F4E6F0010BA4B /* BarBackgroundView.h */,
+				A77FA1C31F7F4E6F0010BA4B /* BarBackgroundView.m */,
 			);
 			path = YYYNavigationBar;
 			sourceTree = "<group>";
@@ -97,6 +105,8 @@
 				A70120531F6F5AB100855647 /* UINavigationBar+YYYNavigationBar.h */,
 				A70120541F6F5AB100855647 /* UINavigationBar+YYYNavigationBar.m */,
 				A70120561F6F61E300855647 /* YYYNavigationHelper.h */,
+				A7310EA01F7DEB120076BDD4 /* YYYNavigationManager.h */,
+				A7310EA11F7DEB120076BDD4 /* YYYNavigationManager.m */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -175,10 +185,12 @@
 				A7CF724C1F6B814400E73CF8 /* ViewController.m in Sources */,
 				A7CF72631F6BAE0700E73CF8 /* UINavigationController+YYYNavigationBar.m in Sources */,
 				A7CF72571F6B814400E73CF8 /* main.m in Sources */,
+				A77FA1C41F7F4E6F0010BA4B /* BarBackgroundView.m in Sources */,
 				A7CF72661F6BB3B600E73CF8 /* TestTableViewController.m in Sources */,
 				A7CF72601F6B81C600E73CF8 /* UIViewController+YYYNavigationBar.m in Sources */,
 				A7CF72491F6B814400E73CF8 /* AppDelegate.m in Sources */,
 				A70120551F6F5AB100855647 /* UINavigationBar+YYYNavigationBar.m in Sources */,
+				A7310EA21F7DEB120076BDD4 /* YYYNavigationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

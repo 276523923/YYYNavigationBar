@@ -11,6 +11,7 @@
 #import "UINavigationBar+YYYNavigationBar.h"
 #import "YYYNavigationHelper.h"
 #import <objc/runtime.h>
+#import "YYYNavigationManager.h"
 
 @implementation UIViewController (YYYNavigationBar)
 
@@ -25,7 +26,7 @@
     UIColor *color = objc_getAssociatedObject(self, @selector(yyy_navigationBarBarTintColor));
     if (!color)
     {
-        color = self.navigationController.navigationBar.barTintColor;
+        color = [YYYNavigationManager manager].navigationBarBarTintColor;
         objc_setAssociatedObject(self, @selector(yyy_navigationBarBarTintColor), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return color;
@@ -45,7 +46,7 @@
     UIColor *color = objc_getAssociatedObject(self, @selector(yyy_navigationBarTintColor));
     if (!color)
     {
-        color = self.navigationController.navigationBar.tintColor;
+        color = [YYYNavigationManager manager].navigationBarTintColor;
         objc_setAssociatedObject(self, @selector(yyy_navigationBarTintColor), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return color;
@@ -65,15 +66,7 @@
     UIColor *color = objc_getAssociatedObject(self, @selector(yyy_navigationBarTitleColor));
     if (!color)
     {
-        NSDictionary *dic = self.navigationController.navigationBar.titleTextAttributes;
-        if (dic)
-        {
-            color = dic[NSForegroundColorAttributeName];
-        }
-        else
-        {
-            color = [UIColor blackColor];
-        }
+        color = [YYYNavigationManager manager].navigationBarTitleColor;
         objc_setAssociatedObject(self, @selector(yyy_navigationBarTitleColor), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return color;
@@ -93,8 +86,8 @@
     NSNumber *alpha = objc_getAssociatedObject(self, @selector(yyy_navigationBarAlpha));
     if (!alpha)
     {
-        alpha = @(1);
-        self.yyy_navigationBarAlpha = 1;
+        alpha = @([YYYNavigationManager manager].navigationBarAlpha);
+        objc_setAssociatedObject(self, @selector(yyy_navigationBarAlpha), alpha, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return [alpha floatValue];
 }
@@ -104,10 +97,7 @@
     yyy_navigationBarAlpha = MAX(MIN(yyy_navigationBarAlpha, 1), 0);
     if ([self yyy_needUpdateNavigationBar])
     {
-        if ([self yyy_needUpdateNavigationBar])
-        {
-            [self.navigationController.navigationBar yyy_updateBarAlpha:yyy_navigationBarAlpha];
-        }
+        [self.navigationController.navigationBar yyy_updateBarAlpha:yyy_navigationBarAlpha];
     }
     objc_setAssociatedObject(self, @selector(yyy_navigationBarAlpha), @(yyy_navigationBarAlpha), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
@@ -141,14 +131,8 @@
     UIColor *color = objc_getAssociatedObject(self, @selector(yyy_navigationBarShadowImageColor));
     if (!color)
     {
-        for (UIView *view in self.navigationController.navigationBar.subviews.firstObject.subviews)
-        {
-            if ([view isKindOfClass:[UIImageView class]] && CGRectGetHeight(view.frame) == 0.5)
-            {
-                color = view.backgroundColor;
-                objc_setAssociatedObject(self, @selector(yyy_navigationBarTintColor), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            }
-        }
+        color = [YYYNavigationManager manager].navigationBarShadowImageColor;
+        objc_setAssociatedObject(self, @selector(yyy_navigationBarShadowImageColor), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return color;
 }
@@ -184,21 +168,64 @@
 
 - (UIImage *)yyy_backgroundImage
 {
-    return objc_getAssociatedObject(self, @selector(yyy_backgroundImage));
+    if (self.yyy_customBarBackgroundView && [self.yyy_customBarBackgroundView isKindOfClass:[UIImageView class]])
+    {
+        UIImageView *imageView = (UIImageView *)self.yyy_customBarBackgroundView;
+        return imageView.image;
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 - (void)setYyy_backgroundImage:(UIImage *)yyy_backgroundImage
 {
+    if (self.yyy_customBarBackgroundView && [self.yyy_customBarBackgroundView isKindOfClass:[UIImageView class]])
+    {
+        UIImageView *imageView = (UIImageView *)self.yyy_customBarBackgroundView;
+        imageView.image = yyy_backgroundImage;
+    }
+    else
+    {
+        self.yyy_customBarBackgroundView = [[UIImageView alloc]initWithImage:yyy_backgroundImage];
+    }
+}
+
+- (BOOL)yyy_hiddenNavigationBar
+{
+    return [objc_getAssociatedObject(self, @selector(yyy_hiddenNavigationBar)) doubleValue];
+}
+
+- (void)setYyy_hiddenNavigationBar:(BOOL)yyy_hiddenNavigationBar
+{
+    objc_setAssociatedObject(self, @selector(yyy_hiddenNavigationBar), @(yyy_hiddenNavigationBar), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    if ([self yyy_needUpdateNavigationBar] && self.navigationController.navigationBarHidden != yyy_hiddenNavigationBar)
+    {
+        [self.navigationController setNavigationBarHidden:yyy_hiddenNavigationBar];
+    }
+}
+
+- (void)setYyy_customBarBackgroundView:(UIView *)yyy_customNavigationBarBackgroundView
+{
+    objc_setAssociatedObject(self, @selector(yyy_customBarBackgroundView), yyy_customNavigationBarBackgroundView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     if ([self yyy_needUpdateNavigationBar])
     {
-        [self.navigationController.navigationBar yyy_updateBackgroundImage:yyy_backgroundImage];
-        if (yyy_backgroundImage)
+        [self.navigationController.navigationBar yyy_updateBackgroundView:yyy_customNavigationBarBackgroundView];
+        if (yyy_customNavigationBarBackgroundView)
         {
             self.navigationController.navigationBar.yyy_backgroundEffectView.alpha = 0;
-            self.navigationController.navigationBar.yyy_backgroundImageView.alpha = 1;
+        }
+        else
+        {
+            self.navigationController.navigationBar.yyy_backgroundEffectView.alpha = 1;
         }
     }
-    objc_setAssociatedObject(self, @selector(yyy_backgroundImage), yyy_backgroundImage, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (UIView *)yyy_customBarBackgroundView
+{
+    return objc_getAssociatedObject(self, @selector(yyy_customBarBackgroundView));
 }
 
 @end

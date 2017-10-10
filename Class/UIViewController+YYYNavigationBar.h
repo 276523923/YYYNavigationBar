@@ -18,5 +18,8 @@
 @property (nonatomic, strong) UIColor *yyy_navigationBarShadowImageColor;
 @property (nonatomic) CGFloat yyy_navigationBarHeight;
 @property (nonatomic, strong) UIImage *yyy_backgroundImage;
+@property (nonatomic) BOOL yyy_hiddenNavigationBar;
+
+@property (nonatomic, strong) UIView *yyy_customBarBackgroundView;
 
 @end

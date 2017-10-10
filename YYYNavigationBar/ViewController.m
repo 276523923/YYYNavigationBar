@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "UIViewController+YYYNavigationBar.h"
+#import "BarBackgroundView.h"
 
 @interface ViewController ()
 
@@ -18,21 +19,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"1111";
+    if (@available(iOS 11.0, *)) {
+        self.navigationController.navigationBar.prefersLargeTitles = YES;
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAutomatic;
+    } else {
+        // Fallback on earlier versions
+    }
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.yyy_navigationBarBarTintColor = [UIColor redColor];
     self.yyy_navigationBarShadowImageColor = [UIColor redColor];
-    self.yyy_navigationBarTintColor = [UIColor blackColor];
-    self.yyy_navigationBarHeight = 44;
-//    self.yyy_backgroundImage = [UIImage imageNamed:@"lagou3"];
-    self.yyy_navigationBarAlpha = 1;
+    self.yyy_customBarBackgroundView = [BarBackgroundView new];
+    self.yyy_customBarBackgroundView.alpha = 0.8;
+    
+//    self.yyy_navigationBarShadowImageColor = [UIColor redColor];
+//    self.yyy_navigationBarTintColor = [UIColor blackColor];
+//    self.yyy_navigationBarAlpha = 1;
+//    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.automaticallyAdjustsScrollViewInsets = NO;
 }
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    NSLog(@"%s",__func__);
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

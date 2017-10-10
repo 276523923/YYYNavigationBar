@@ -18,9 +18,12 @@
 - (void)yyy_updateBarShadowImageColor:(UIColor *)shadowColor;
 - (void)yyy_updateBackgroundImage:(UIImage *)image;
 
+- (void)yyy_updateBackgroundView:(UIView *)backgroundView;//会添加在yyy_UIBarBackgroundView；
 
-- (UIView *)yyy_UIBarBackgroundView;
+- (__kindof UIView *)yyy_UIBarBackgroundView;/**< 要添加自定义背景的话，建议添加在这层上 */
+- (__kindof UIView *)yyy_backgroundEffectView;
 - (UIImageView *)yyy_backgroundImageView;
-- (UIView *)yyy_backgroundEffectView;
+- (__kindof UIView *)yyy_customBackgroundView;
+- (UIImageView *)yyy_shadowImageView;
 
 @end

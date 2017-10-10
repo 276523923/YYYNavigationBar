@@ -138,18 +138,18 @@
         self.titleTextAttributes = newTitleTextAttributes;
     }
     
+    //滑动过程中会有两个标题，所以得一起改
+    Class cls = nil;
+    if (@available(iOS 11.0, *))
+    {
+        cls = NSClassFromString(@"_UINavigationBarContentView");
+    }
+    else
+    {
+        cls = NSClassFromString(@"UINavigationItemView");
+    }
     for (UIView *view in self.subviews)
     {
-        Class cls = nil;
-        if (@available(iOS 11.0, *))
-        {
-            cls = NSClassFromString(@"_UINavigationBarContentView");
-        }
-        else
-        {
-            cls = NSClassFromString(@"UINavigationItemView");
-        }
-        
         if ([view isMemberOfClass:cls])
         {
             for (UILabel *lbl in view.subviews)
@@ -165,25 +165,28 @@
 
 - (void)yyy_updateBarBarTintColor:(UIColor *)barTintColor
 {
-    UIView *effview = [self yyy_backgroundEffectView];
-    if (effview)
-    {
-        UIView *view = effview.subviews.lastObject;
-        view.yyy_custom_backgroundColor = barTintColor;
-    }
     self.barTintColor = barTintColor;
+    if (self.translucent)
+    {
+        UIView *effview = [self yyy_backgroundEffectView];
+        if (effview)
+        {
+            if (effview.subviews.count == 3)
+            {
+                UIView *view = effview.subviews.lastObject;
+                view.yyy_custom_backgroundColor = barTintColor;
+            }
+        }
+    }
+    else
+    {
+        [self yyy_UIBarBackgroundView].backgroundColor = barTintColor;
+    }
 }
 
 - (void)yyy_updateBarShadowImageColor:(UIColor *)shadowColor
 {
-    UIView *backgroundView = [self yyy_UIBarBackgroundView];
-    for (UIView *view in backgroundView.subviews)
-    {
-        if ([view isKindOfClass:[UIImageView class]] && CGRectGetHeight(view.frame) == 0.5)
-        {
-            view.yyy_custom_backgroundColor = shadowColor;
-        }
-    }
+    [self yyy_shadowImageView].yyy_custom_backgroundColor = shadowColor;
 }
 
 - (void)yyy_updateBackgroundImage:(UIImage *)image
@@ -191,38 +194,96 @@
     self.yyy_backgroundImageView.image = image;
 }
 
-- (UIView *)yyy_UIBarBackgroundView
+- (void)yyy_updateBackgroundView:(UIView *)backgroundView
 {
-    if (@available(iOS 9.0, *))
+    UIView *view = self.yyy_customBackgroundView;
+    if (view == backgroundView)
     {
-        return ViewOfClass(self, NSClassFromString(@"_UIBarBackground"));
+        return;
     }
-    else
+    if (view)
     {
-        return ViewOfClass(self, NSClassFromString(@"_UINavigationBarBackground"));
+        [view removeFromSuperview];
+    }
+    objc_setAssociatedObject(self, @selector(yyy_customBackgroundView), backgroundView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    if (backgroundView)
+    {
+        backgroundView.frame = [self yyy_UIBarBackgroundView].bounds;
+        backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        
+        if (backgroundView.superview)
+        {
+            if (backgroundView.superview == [self yyy_UIBarBackgroundView])
+            {
+                [[self yyy_UIBarBackgroundView] sendSubviewToBack:backgroundView];
+            }
+            else
+            {
+                [backgroundView removeFromSuperview];
+                [[self yyy_UIBarBackgroundView] insertSubview:backgroundView atIndex:0];
+            }
+        }
+        else
+        {
+            [[self yyy_UIBarBackgroundView] insertSubview:backgroundView atIndex:0];
+        }
     }
 }
 
-- (UIImageView *)yyy_backgroundImageView
+#pragma mark - 获取相应的View
+- (UIView *)yyy_UIBarBackgroundView
 {
-    UIImageView *imageView = objc_getAssociatedObject(self, @selector(yyy_backgroundImageView));
-    if (!imageView)
+    Class cls = nil;
+    if (@available(iOS 10.0, *))
     {
-        UIView *backgroundView = [self yyy_UIBarBackgroundView];
-        imageView = [UIImageView new];
-        imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        imageView.frame = backgroundView.bounds;
-        [backgroundView insertSubview:imageView atIndex:0];
-        objc_setAssociatedObject(self, @selector(yyy_backgroundImageView), imageView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        cls = NSClassFromString(@"_UIBarBackground");
     }
-    return imageView;
+    else
+    {
+        cls = NSClassFromString(@"_UINavigationBarBackground");
+    }
+    for (UIView *view in self.subviews)
+    {
+        if ([view isMemberOfClass:cls])
+        {
+            return view;
+        }
+    }
+    return nil;
+}
+
+- (UILabel *)yyy_TitleViewLabel
+{
+    Class cls = nil;
+    if (@available(iOS 11.0, *))
+    {
+        cls = NSClassFromString(@"_UINavigationBarContentView");
+    }
+    else
+    {
+        cls = NSClassFromString(@"UINavigationItemView");
+    }
+    for (UIView *view in self.subviews)
+    {
+        if ([view isMemberOfClass:cls])
+        {
+            for (UILabel *lbl in view.subviews)
+            {
+                if ([lbl isMemberOfClass:[UILabel class]])
+                {
+                    return lbl;
+                }
+            }
+        }
+    }
+    return nil;
 }
 
 - (UIView *)yyy_backgroundEffectView
 {
     UIView *view = nil;
     Class cls = nil;
-    if (@available(iOS 9.0, *))
+    if (@available(iOS 10.0, *))
     {
         cls = [UIVisualEffectView class];
     }
@@ -230,7 +291,6 @@
     {
         cls = NSClassFromString(@"_UIBackdropView");
     }
-    
     for (UIView *subview in [self yyy_UIBarBackgroundView].subviews)
     {
         if ([subview isMemberOfClass:cls])
@@ -243,32 +303,35 @@
     return view;
 }
 
+- (UIImageView *)yyy_shadowImageView
+{
+    UIImageView *shadowImageView = nil;
+    UIView *backgroundView = [self yyy_UIBarBackgroundView];
+    for (UIView *view in backgroundView.subviews)
+    {
+        if ([view isKindOfClass:[UIImageView class]] && CGRectGetHeight(view.frame) == 0.5)
+        {
+            shadowImageView = (UIImageView *)view;
+            break;
+        }
+    }
+    return shadowImageView;
+}
 
-//- (void)yyy_layoutSubviews
-//{
-//    LogSubview(self,@"-");
-//    [self yyy_layoutSubviews];
-//}
-//
-//- (CGSize)yyy_sizeThatFits:(CGSize)size
-//{
-//    CGSize newSize = [self yyy_sizeThatFits:size];
-//    NSNumber *height = objc_getAssociatedObject(self, @selector(customHeight));
-//    if (height)
-//    {
-//        return CGSizeMake(newSize.width, [height doubleValue]);
-//    }
-//    return newSize;
-//}
-//
-//- (CGFloat)customHeight
-//{
-//    NSNumber *height = objc_getAssociatedObject(self, @selector(customHeight));
-//    return [height doubleValue];
-//}
-//
-//- (void)setCustomHeight:(CGFloat)customHeight
-//{
-//    objc_setAssociatedObject(self, @selector(customHeight), @(customHeight), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-//}
+- (UIImageView *)yyy_backgroundImageView
+{
+    UIImageView *imageView = self.yyy_customBackgroundView;
+    if (!imageView || ![imageView isKindOfClass:[UIImageView class]])
+    {
+        imageView = [UIImageView new];
+        [self yyy_updateBackgroundView:imageView];
+    }
+    return imageView;
+}
+
+- (__kindof UIView *)yyy_customBackgroundView
+{
+    return objc_getAssociatedObject(self, _cmd);
+}
+
 @end
