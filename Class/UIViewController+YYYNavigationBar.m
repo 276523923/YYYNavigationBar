@@ -20,13 +20,22 @@
     return self.navigationController.navigationBar && self.navigationController.yyy_currentShowController == self;
 }
 
+- (YYYNavigationManager *)yyy_manager
+{
+    if (self.navigationController.yyy_manager)
+    {
+        return self.navigationController.yyy_manager;
+    }
+    return [YYYNavigationManager manager];
+}
+
 #pragma mark - get,set
 - (UIColor *)yyy_navigationBarBarTintColor
 {
     UIColor *color = objc_getAssociatedObject(self, @selector(yyy_navigationBarBarTintColor));
     if (!color)
     {
-        color = [YYYNavigationManager manager].navigationBarBarTintColor;
+        color = self.yyy_manager.navigationBarBarTintColor;
         objc_setAssociatedObject(self, @selector(yyy_navigationBarBarTintColor), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return color;
@@ -46,7 +55,7 @@
     UIColor *color = objc_getAssociatedObject(self, @selector(yyy_navigationBarTintColor));
     if (!color)
     {
-        color = [YYYNavigationManager manager].navigationBarTintColor;
+        color = self.yyy_manager.navigationBarTintColor;
         objc_setAssociatedObject(self, @selector(yyy_navigationBarTintColor), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return color;
@@ -66,7 +75,7 @@
     UIColor *color = objc_getAssociatedObject(self, @selector(yyy_navigationBarTitleColor));
     if (!color)
     {
-        color = [YYYNavigationManager manager].navigationBarTitleColor;
+        color = self.yyy_manager.navigationBarTitleColor;
         objc_setAssociatedObject(self, @selector(yyy_navigationBarTitleColor), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return color;
@@ -86,7 +95,7 @@
     NSNumber *alpha = objc_getAssociatedObject(self, @selector(yyy_navigationBarAlpha));
     if (!alpha)
     {
-        alpha = @([YYYNavigationManager manager].navigationBarAlpha);
+        alpha = @(self.yyy_manager.navigationBarAlpha);
         objc_setAssociatedObject(self, @selector(yyy_navigationBarAlpha), alpha, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return [alpha floatValue];
@@ -107,7 +116,7 @@
     NSNumber *style = objc_getAssociatedObject(self, @selector(yyy_preferredStatusBarStyle));
     if (!style)
     {
-        style = @(UIStatusBarStyleDefault);
+        style = @(self.yyy_manager.statusBarStyle);
     }
     return [style integerValue];
 }
@@ -131,7 +140,7 @@
     UIColor *color = objc_getAssociatedObject(self, @selector(yyy_navigationBarShadowImageColor));
     if (!color)
     {
-        color = [YYYNavigationManager manager].navigationBarShadowImageColor;
+        color = self.yyy_manager.navigationBarShadowImageColor;
         objc_setAssociatedObject(self, @selector(yyy_navigationBarShadowImageColor), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return color;
@@ -225,9 +234,17 @@
 
 - (UIView *)yyy_customBarBackgroundView
 {
-    return objc_getAssociatedObject(self, @selector(yyy_customBarBackgroundView));
+    UIView *view =  objc_getAssociatedObject(self, @selector(yyy_customBarBackgroundView));
+    if (!view)
+    {
+        if (self.yyy_manager.customBarBackgroundView)
+        {
+            view = self.yyy_manager.customBarBackgroundView;
+            self.yyy_customBarBackgroundView = view;
+        }
+    }
+    return view;
 }
-
 @end
 
 

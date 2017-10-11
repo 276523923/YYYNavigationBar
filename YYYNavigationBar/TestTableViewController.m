@@ -28,7 +28,7 @@
     self.yyy_navigationBarBarTintColor = [UIColor whiteColor];
 //    self.yyy_navigationBarAlpha = 0;
   
-    self.yyy_backgroundImage = [UIImage imageNamed:@"imageNav"];
+//    self.yyy_backgroundImage = [UIImage imageNamed:@"imageNav"];
 //    self.navigationItem.titleView =({
 //        UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, 375, 44)];
 //        textField.backgroundColor = [UIColor redColor];

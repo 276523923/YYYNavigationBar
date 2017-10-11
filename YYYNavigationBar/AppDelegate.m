@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "UIViewController+YYYNavigationBar.h"
+#import "YYYNavigationManager.h"
+#import "BarBackgroundView.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +19,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [YYYNavigationManager manager].customBarBackgroundView = [BarBackgroundView new];
     // Override point for customization after application launch.
 //      [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-60, 0) forBarMetrics:UIBarMetricsDefault];
     return YES;

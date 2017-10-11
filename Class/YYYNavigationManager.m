@@ -13,18 +13,28 @@ static YYYNavigationManager *manager__ = nil;
 
 - (instancetype)init
 {
-    if (!manager__)
-    {
-        manager__ = [super init];
-        manager__.navigationBarTintColor = [UIColor colorWithRed:0 green:0.478431 blue:1 alpha:1];
-        manager__.navigationBarBarTintColor = [UIColor colorWithWhite:0.97f alpha:0.8f];
-        manager__.navigationBarTitleColor = [UIColor darkTextColor];
-        manager__.navigationBarAlpha = 1;
-        manager__.navigationBarShadowImageColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3f];
-        manager__.hiddenNavigationBar = NO;
-        manager__.backgroundImage = nil;
+    self = [super init];
+    if (self) {
+        self.navigationBarTintColor = [UIColor colorWithRed:0 green:0.478431 blue:1 alpha:1];
+        self.navigationBarBarTintColor = [UIColor colorWithWhite:0.97f alpha:0.8f];
+        self.navigationBarTitleColor = [UIColor darkTextColor];
+        self.navigationBarAlpha = 1;
+        self.navigationBarShadowImageColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3f];
+        self.hiddenNavigationBar = NO;
+        self.backgroundImage = nil;
+        self.customBarBackgroundView = nil;
+        NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
+        NSString *style = [info valueForKey:@"UIStatusBarStyle"];
+        if ([style isEqualToString:@"UIStatusBarStyleLightContent"])
+        {
+            self.statusBarStyle = UIStatusBarStyleLightContent;
+        }
+        else
+        {
+            self.statusBarStyle = UIStatusBarStyleDefault;
+        }
     }
-    return manager__;
+    return self;
 }
 
 + (instancetype)manager

@@ -66,17 +66,13 @@ static CGFloat yyy_customToViewAlpha = 0;
     {
         yyy_customFromViewAlpha = self.yyy_currentShowController.yyy_customBarBackgroundView.alpha;
     }
-   
+    
     if (viewController.yyy_customBarBackgroundView)
     {
         yyy_customToViewAlpha = viewController.yyy_customBarBackgroundView.alpha;
         UIView *toVCView = viewController.yyy_customBarBackgroundView;
         UIView *fromVCView = self.navigationBar.yyy_customBackgroundView;
-        if (fromVCView == toVCView)
-        {
-            fromVCView = nil;
-        }
-        if (fromVCView)
+        if (fromVCView && fromVCView != toVCView)
         {
             toVCView.frame = fromVCView.frame;
             toVCView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -103,7 +99,10 @@ static CGFloat yyy_customToViewAlpha = 0;
             
             UIView *fromVCView = fromVC.yyy_customBarBackgroundView;
             UIView *toVCView = toVC.yyy_customBarBackgroundView;
-            toVCView.alpha = 0;
+            if (fromVCView != toVCView)
+            {
+                toVCView.alpha = 0;
+            }
             
             CGFloat toViewAlpha = yyy_customToViewAlpha;
             CGFloat effectViewAlpha = toVCView? 0:1;
@@ -140,8 +139,11 @@ static CGFloat yyy_customToViewAlpha = 0;
             }
             
             [UIView animateWithDuration:duration animations:^{
-                fromVCView.alpha = 0;
-                toVCView.alpha = toViewAlpha;
+                if (fromVCView != toVCView)
+                {
+                    fromVCView.alpha = 0;
+                    toVCView.alpha = toViewAlpha;
+                }
                 self.navigationBar.yyy_backgroundEffectView.alpha = effectViewAlpha;
                 [self.navigationBar yyy_updateBarAlpha:toVC.yyy_navigationBarAlpha];
                 [self.navigationBar yyy_updateBarTintColor:toVC.yyy_navigationBarTintColor];
@@ -193,8 +195,8 @@ static CGFloat yyy_customToViewAlpha = 0;
     
     if ([self.yyy_delegate respondsToSelector:@selector(navigationController:willShowViewController:animated:)]) {
         [self.yyy_delegate navigationController:navigationController
-                        willShowViewController:viewController
-                                      animated:animated];
+                         willShowViewController:viewController
+                                       animated:animated];
     }
 }
 
@@ -207,11 +209,11 @@ static CGFloat yyy_customToViewAlpha = 0;
     self.interactivePopGestureRecognizer.enabled = viewController != self.viewControllers.firstObject;
     self.yyy_currentShowController = viewController;
     [self yyy_updateNavigationBarWithViewController:viewController];
-
+    
     if ([self.yyy_delegate respondsToSelector:@selector(navigationController:didShowViewController:animated:)]) {
         [self.yyy_delegate navigationController:navigationController
-                         didShowViewController:viewController
-                                      animated:animated];
+                          didShowViewController:viewController
+                                       animated:animated];
     }
 }
 
@@ -237,7 +239,7 @@ static CGFloat yyy_customToViewAlpha = 0;
 {
     if ([self.yyy_delegate respondsToSelector:@selector(navigationController:interactionControllerForAnimationController:)]) {
         return [self.yyy_delegate navigationController:navigationController
-          interactionControllerForAnimationController:animationController];
+           interactionControllerForAnimationController:animationController];
     }
     return nil;
 }
@@ -249,9 +251,9 @@ static CGFloat yyy_customToViewAlpha = 0;
 {
     if ([self.yyy_delegate respondsToSelector:@selector(navigationController:animationControllerForOperation:fromViewController:toViewController:)]) {
         return [self.yyy_delegate navigationController:navigationController
-                      animationControllerForOperation:operation
-                                   fromViewController:fromVC
-                                     toViewController:toVC];
+                       animationControllerForOperation:operation
+                                    fromViewController:fromVC
+                                      toViewController:toVC];
     }
     return nil;
 }
@@ -267,7 +269,6 @@ static CGFloat yyy_customToViewAlpha = 0;
         fromVC = [context viewControllerForKey:UITransitionContextToViewControllerKey];
         toVC = [context viewControllerForKey:UITransitionContextFromViewControllerKey];
         duration = [context transitionDuration] * [context percentComplete];
-        
         CGFloat temp = yyy_customFromViewAlpha;
         yyy_customFromViewAlpha = yyy_customToViewAlpha;
         yyy_customToViewAlpha = temp;
@@ -291,8 +292,11 @@ static CGFloat yyy_customToViewAlpha = 0;
         barTintColor = fromVC.yyy_navigationBarBarTintColor;
     }
     [UIView animateWithDuration:duration animations:^{
-        fromVCView.alpha = 0;
-        toVCView.alpha = toViewAlpha;
+        if (fromVCView != toVCView)
+        {
+            fromVCView.alpha = 0;
+            toVCView.alpha = toViewAlpha;
+        }
         self.navigationBar.yyy_backgroundEffectView.alpha = effectViewAlpha;
         [self.navigationBar yyy_updateBarAlpha:toVC.yyy_navigationBarAlpha];
         [self.navigationBar yyy_updateBarTintColor:toVC.yyy_navigationBarTintColor];
@@ -306,7 +310,10 @@ static CGFloat yyy_customToViewAlpha = 0;
     } completion:^(BOOL finished) {
         if (cancelled)
         {
-            [fromVCView removeFromSuperview];
+            if (fromVCView != toVCView)
+            {
+                [fromVCView removeFromSuperview];
+            }
         }
         else
         {
@@ -426,11 +433,14 @@ static CGFloat yyy_customToViewAlpha = 0;
         toViewAlpha = 0;
         barTintColor = fromVC.yyy_navigationBarBarTintColor;
     }
-    
     [self.navigationBar yyy_updateBarBarTintColor:barTintColor];
     self.navigationBar.yyy_backgroundEffectView.alpha = effectViewAlpha;
-    fromVCView.alpha = fromViewAlpha;
-    toVCView.alpha = toViewAlpha;
+    if (fromVCView != toVCView)
+    {
+        fromVCView.alpha = fromViewAlpha;
+        toVCView.alpha = toViewAlpha;
+    }
+    
 }
 
 #pragma mark - get,set
@@ -473,7 +483,7 @@ static CGFloat yyy_customToViewAlpha = 0;
 - (void)setYyy_viewControllerTransitionAnimationsBlock:(void (^)(UIViewController *, UIViewController *, CGFloat))yyy_viewControllerTransitionAnimationsBlock
 {
     objc_setAssociatedObject(self, @selector(yyy_viewControllerTransitionAnimationsBlock), yyy_viewControllerTransitionAnimationsBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-
+    
 }
 
 - (void (^)(UIViewController *, UIViewController *, CGFloat))yyy_viewControllerTransitionAnimationsBlock
@@ -491,7 +501,25 @@ static CGFloat yyy_customToViewAlpha = 0;
     return objc_getAssociatedObject(self, @selector(yyy_transitionCompleteBlock));
 }
 
+- (YYYNavigationManager *)yyy_manager
+{
+    YYYNavigationManager *manager = objc_getAssociatedObject(self, _cmd);
+    if (!manager)
+    {
+        manager = [YYYNavigationManager manager];
+        self.yyy_manager = manager;
+    }
+    return manager;
+}
 
+- (void)setYyy_manager:(YYYNavigationManager *)yyy_manager
+{
+    if (![yyy_manager isKindOfClass:[YYYNavigationManager class]])
+    {
+        yyy_manager = nil;
+    }
+    objc_setAssociatedObject(self, @selector(yyy_manager), yyy_manager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 @end
 

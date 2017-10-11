@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "YYYNavigationManager.h"
 
 @interface UINavigationController (YYYNavigationBar)
 
@@ -15,5 +15,6 @@
 @property (nonatomic, copy)  void(^yyy_viewControllerTransitionAnimationsBlock)(UIViewController *fromViewController,UIViewController *toViewController,CGFloat transitionDuration);
 @property (nonatomic, copy) void(^yyy_transitionCompleteBlock)(UIViewController *toViewController);
 @property (nonatomic, weak) id<UINavigationControllerDelegate> yyy_delegate;
+@property (nonatomic, strong) YYYNavigationManager *yyy_manager;
 
 @end 

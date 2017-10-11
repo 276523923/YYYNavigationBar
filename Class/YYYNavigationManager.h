@@ -19,6 +19,8 @@
 @property (nonatomic, assign) CGFloat navigationBarAlpha;
 @property (nonatomic, strong) UIColor *navigationBarShadowImageColor;
 @property (nonatomic, strong) UIImage *backgroundImage;
+@property (nonatomic, strong) UIView *customBarBackgroundView;
+@property (nonatomic) UIStatusBarStyle statusBarStyle;
 @property (nonatomic) BOOL hiddenNavigationBar;
 @property (nonatomic) CGFloat navigationBarHeight;
 
