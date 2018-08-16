@@ -8,10 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-/**
- 全局配置属性
- */
-@interface YYYNavigationManager : NSObject
+@interface YYYNavigationManager : NSObject<NSCopying,NSMutableCopying>
 
 @property (nonatomic, strong) UIColor *navigationBarTintColor;
 @property (nonatomic, strong) UIColor *navigationBarBarTintColor;
@@ -24,6 +21,22 @@
 @property (nonatomic) BOOL hiddenNavigationBar;
 @property (nonatomic) CGFloat navigationBarHeight;
 
-+ (instancetype)manager;
+@property (nonatomic) BOOL isShow;
+
+
+/**
+ 全局默认配置
+
+ @return globalManager
+ */
++ (instancetype)globalManager;
+
+
+/**
+ globalManager copy
+
+ @return manager
+ */
++ (instancetype)newManager;
 
 @end

@@ -20,7 +20,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [YYYNavigationManager manager].customBarBackgroundView = [BarBackgroundView new];
+    [YYYNavigationManager globalManager].customBarBackgroundView = [BarBackgroundView new];
+    if (@available(iOS 11, *)) {
+        [UIScrollView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        [UITableView appearance].estimatedRowHeight = 0;
+        [UITableView appearance].estimatedSectionFooterHeight = 0;
+        [UITableView appearance].estimatedSectionHeaderHeight = 0;
+    }
+    //    [UIView appearanceWhenContainedIn:UITableView.class, nil].backgroundColor = kBackgroundColor;
+    [UITableView appearance].rowHeight = 100;
+    [UITableView appearance].sectionHeaderHeight = 0;
+    [UITableView appearance].sectionFooterHeight = 0;
+    [UITableView appearance].separatorColor = [UIColor cyanColor];
+    
     // Override point for customization after application launch.
 //      [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-60, 0) forBarMetrics:UIBarMetricsDefault];
     return YES;

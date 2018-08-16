@@ -29,10 +29,4 @@
     return [CAGradientLayer class];
 }
 
-- (void)setAlpha:(CGFloat)alpha
-{
-    [super setAlpha:alpha];
-//    self.layer.opacity = alpha;
-}
-
 @end

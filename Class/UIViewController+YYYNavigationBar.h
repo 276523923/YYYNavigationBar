@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YYYNavigationManager.h"
 
 @interface UIViewController (YYYNavigationBar)
+
+@property (nonatomic, strong, readonly) YYYNavigationManager *yyy_navigationManager;
 
 @property (nonatomic, strong) UIColor *yyy_navigationBarTintColor;
 @property (nonatomic, strong) UIColor *yyy_navigationBarBarTintColor;

@@ -11,10 +11,13 @@
 
 @interface UINavigationController (YYYNavigationBar)
 
-@property (nonatomic, weak, readonly) UIViewController *yyy_currentShowController;/**< 当前显示的VC */
+@property (nonatomic, strong, readonly) YYYNavigationManager *yyy_defaultManager;
+
+@property (nonatomic) BOOL yyy_enabled;/**< 控制是否启用，默认YES */
+
 @property (nonatomic, copy)  void(^yyy_viewControllerTransitionAnimationsBlock)(UIViewController *fromViewController,UIViewController *toViewController,CGFloat transitionDuration);
 @property (nonatomic, copy) void(^yyy_transitionCompleteBlock)(UIViewController *toViewController);
-@property (nonatomic, weak) id<UINavigationControllerDelegate> yyy_delegate;
-@property (nonatomic, strong) YYYNavigationManager *yyy_manager;
+
+- (void)yyy_updateNavigationBarWithViewController:(UIViewController *)vc;
 
 @end 
