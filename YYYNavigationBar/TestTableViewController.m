@@ -23,49 +23,34 @@
 
 - (void)loadView {
     [super loadView];
-
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"2222";
-    self.yyy_preferredStatusBarStyle = UIStatusBarStyleLightContent;
-    self.yyy_navigationBarTintColor = [UIColor greenColor];
-    self.yyy_navigationBarTitleColor = [UIColor greenColor];
-    self.yyy_navigationBarShadowImageColor = [UIColor cyanColor];
+
+    self.yyy_navigationManager.navigationBarTintColor = [UIColor greenColor];
+    self.yyy_navigationManager.navigationBarTitleColor = [UIColor greenColor];
+    self.yyy_navigationManager.navigationBarShadowImageColor = [UIColor blueColor];
+    self.yyy_navigationManager.navigationBarAlpha = 0;
+    
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor blueColor];
-    self.yyy_customBarBackgroundView = view;
+    self.yyy_navigationManager.customBarBackgroundView = view;
+    self.yyy_navigationManager.statusBarStyle = UIStatusBarStyleLightContent;
 
-//    self.yyy_navigationBarBarTintColor = [UIColor whiteColor];
-//    self.yyy_navigationBarBarTintColor = [UIColor blueColor];
-//    self.yyy_customBarBackgroundView = nil;
-//    self.yyy_navigationBarAlpha = 0;
-
-
-//    self.yyy_backgroundImage = [UIImage imageNamed:@"imageNav"];
-//    self.navigationItem.titleView =({
-//        UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, 375, 44)];
-//        textField.backgroundColor = [UIColor redColor];
-//        textField;
-//    });
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"item" style:UIBarButtonItemStylePlain target:self action:@selector(nextView)];
 
     [self.tableView registerClass:Test1TableViewCell.class forCellReuseIdentifier:@"Test1TableViewCell"];
     [self.tableView registerClass:Test2TableViewCell.class forCellReuseIdentifier:@"Test2TableViewCell"];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
-
-
-//    [self.navigationController setNavigationBarHidden:YES];
-//    self.yyy_hiddenNavigationBar = YES;
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+//    self.yyy_navigationManager.hiddenNavigationBar = YES;
 
 }
 - (void)didReceiveMemoryWarning {
@@ -122,9 +107,11 @@
     }
 }
 //
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    self.yyy_navigationBarAlpha = (scrollView.contentOffset.y + scrollView.contentInset.top)/100.f;
-//}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat alpha = (scrollView.contentOffset.y + scrollView.contentInset.top)/100.f;
+    NSLog(@"change %@",@(alpha));
+    self.yyy_navigationManager.navigationBarAlpha = alpha;
+}
 
 @end

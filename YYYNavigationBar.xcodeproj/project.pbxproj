@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		A70120551F6F5AB100855647 /* UINavigationBar+YYYNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A70120541F6F5AB100855647 /* UINavigationBar+YYYNavigationBar.m */; };
 		A7310EA21F7DEB120076BDD4 /* YYYNavigationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A7310EA11F7DEB120076BDD4 /* YYYNavigationManager.m */; };
+		A742C6CE21267DBF00CA7D00 /* YYYTransitionDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = A742C6CD21267DBF00CA7D00 /* YYYTransitionDriver.m */; };
+		A7515842212C0E4700383572 /* YYYNavigationManagerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = A7515841212C0E4700383572 /* YYYNavigationManagerProxy.m */; };
 		A77FA1C41F7F4E6F0010BA4B /* BarBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A77FA1C31F7F4E6F0010BA4B /* BarBackgroundView.m */; };
 		A7CF72491F6B814400E73CF8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A7CF72481F6B814400E73CF8 /* AppDelegate.m */; };
 		A7CF724C1F6B814400E73CF8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7CF724B1F6B814400E73CF8 /* ViewController.m */; };
@@ -19,6 +21,7 @@
 		A7CF72601F6B81C600E73CF8 /* UIViewController+YYYNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A7CF725F1F6B81C600E73CF8 /* UIViewController+YYYNavigationBar.m */; };
 		A7CF72631F6BAE0700E73CF8 /* UINavigationController+YYYNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A7CF72621F6BAE0700E73CF8 /* UINavigationController+YYYNavigationBar.m */; };
 		A7CF72661F6BB3B600E73CF8 /* TestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7CF72651F6BB3B600E73CF8 /* TestTableViewController.m */; };
+		A7FA1EBC212CFDD90055C864 /* YYYCustomAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FA1EBB212CFDD90055C864 /* YYYCustomAnimator.m */; };
 		A7FD0C742068E81400BCED89 /* Test1TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FD0C732068E81400BCED89 /* Test1TableViewCell.m */; };
 		A7FD0C772068E81E00BCED89 /* Test2TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FD0C762068E81E00BCED89 /* Test2TableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -29,6 +32,10 @@
 		A70120561F6F61E300855647 /* YYYNavigationHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYYNavigationHelper.h; sourceTree = "<group>"; };
 		A7310EA01F7DEB120076BDD4 /* YYYNavigationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYYNavigationManager.h; sourceTree = "<group>"; };
 		A7310EA11F7DEB120076BDD4 /* YYYNavigationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYYNavigationManager.m; sourceTree = "<group>"; };
+		A742C6CC21267DBF00CA7D00 /* YYYTransitionDriver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYYTransitionDriver.h; sourceTree = "<group>"; };
+		A742C6CD21267DBF00CA7D00 /* YYYTransitionDriver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYYTransitionDriver.m; sourceTree = "<group>"; };
+		A7515840212C0E4700383572 /* YYYNavigationManagerProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYYNavigationManagerProxy.h; sourceTree = "<group>"; };
+		A7515841212C0E4700383572 /* YYYNavigationManagerProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYYNavigationManagerProxy.m; sourceTree = "<group>"; };
 		A77FA1C21F7F4E6F0010BA4B /* BarBackgroundView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarBackgroundView.h; sourceTree = "<group>"; };
 		A77FA1C31F7F4E6F0010BA4B /* BarBackgroundView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarBackgroundView.m; sourceTree = "<group>"; };
 		A7CF72441F6B814400E73CF8 /* YYYNavigationBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YYYNavigationBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +54,8 @@
 		A7CF72621F6BAE0700E73CF8 /* UINavigationController+YYYNavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+YYYNavigationBar.m"; sourceTree = "<group>"; };
 		A7CF72641F6BB3B600E73CF8 /* TestTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestTableViewController.h; sourceTree = "<group>"; };
 		A7CF72651F6BB3B600E73CF8 /* TestTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestTableViewController.m; sourceTree = "<group>"; };
+		A7FA1EBA212CFDD90055C864 /* YYYCustomAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYYCustomAnimator.h; sourceTree = "<group>"; };
+		A7FA1EBB212CFDD90055C864 /* YYYCustomAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYYCustomAnimator.m; sourceTree = "<group>"; };
 		A7FD0C722068E81400BCED89 /* Test1TableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test1TableViewCell.h; sourceTree = "<group>"; };
 		A7FD0C732068E81400BCED89 /* Test1TableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test1TableViewCell.m; sourceTree = "<group>"; };
 		A7FD0C752068E81E00BCED89 /* Test2TableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test2TableViewCell.h; sourceTree = "<group>"; };
@@ -64,6 +73,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A751583C212AB09C00383572 /* CustomAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				A7FA1EBA212CFDD90055C864 /* YYYCustomAnimator.h */,
+				A7FA1EBB212CFDD90055C864 /* YYYCustomAnimator.m */,
+			);
+			path = CustomAnimation;
+			sourceTree = "<group>";
+		};
 		A7CF723B1F6B814400E73CF8 = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +135,11 @@
 				A70120561F6F61E300855647 /* YYYNavigationHelper.h */,
 				A7310EA01F7DEB120076BDD4 /* YYYNavigationManager.h */,
 				A7310EA11F7DEB120076BDD4 /* YYYNavigationManager.m */,
+				A7515840212C0E4700383572 /* YYYNavigationManagerProxy.h */,
+				A7515841212C0E4700383572 /* YYYNavigationManagerProxy.m */,
+				A742C6CC21267DBF00CA7D00 /* YYYTransitionDriver.h */,
+				A742C6CD21267DBF00CA7D00 /* YYYTransitionDriver.m */,
+				A751583C212AB09C00383572 /* CustomAnimation */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -147,7 +170,7 @@
 		A7CF723C1F6B814400E73CF8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "叶越悦";
 				TargetAttributes = {
 					A7CF72431F6B814400E73CF8 = {
@@ -198,11 +221,14 @@
 				A7CF72571F6B814400E73CF8 /* main.m in Sources */,
 				A7FD0C772068E81E00BCED89 /* Test2TableViewCell.m in Sources */,
 				A77FA1C41F7F4E6F0010BA4B /* BarBackgroundView.m in Sources */,
+				A742C6CE21267DBF00CA7D00 /* YYYTransitionDriver.m in Sources */,
+				A7515842212C0E4700383572 /* YYYNavigationManagerProxy.m in Sources */,
 				A7CF72661F6BB3B600E73CF8 /* TestTableViewController.m in Sources */,
 				A7CF72601F6B81C600E73CF8 /* UIViewController+YYYNavigationBar.m in Sources */,
 				A7CF72491F6B814400E73CF8 /* AppDelegate.m in Sources */,
 				A70120551F6F5AB100855647 /* UINavigationBar+YYYNavigationBar.m in Sources */,
 				A7310EA21F7DEB120076BDD4 /* YYYNavigationManager.m in Sources */,
+				A7FA1EBC212CFDD90055C864 /* YYYCustomAnimator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +268,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -249,6 +276,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -297,6 +325,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -304,6 +333,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

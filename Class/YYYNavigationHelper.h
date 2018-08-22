@@ -13,30 +13,6 @@
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 
-static inline UIColor *MiddleColor(UIColor *fromColor,UIColor *toColor,CGFloat percent) {
-    CGFloat fromRed = 0;
-    CGFloat fromGreen = 0;
-    CGFloat fromBlue = 0;
-    CGFloat fromAlpha = 0;
-    [fromColor getRed:&fromRed green:&fromGreen blue:&fromBlue alpha:&fromAlpha];
-    
-    CGFloat toRed = 0;
-    CGFloat toGreen = 0;
-    CGFloat toBlue = 0;
-    CGFloat toAlpha = 0;
-    [toColor getRed:&toRed green:&toGreen blue:&toBlue alpha:&toAlpha];
-    
-    CGFloat newRed = fromRed + (toRed - fromRed) * percent;
-    CGFloat newGreen = fromGreen + (toGreen - fromGreen) * percent;
-    CGFloat newBlue = fromBlue + (toBlue - fromBlue) * percent;
-    CGFloat newAlpha = fromAlpha + (toAlpha - fromAlpha) * percent;
-    return [UIColor colorWithRed:newRed green:newGreen blue:newBlue alpha:newAlpha];
-}
-
-static inline CGFloat MiddleValue(CGFloat fromValue,CGFloat toValue,CGFloat percent) {
-    return fromValue + (toValue - fromValue) * percent;
-}
-
 static inline void SwapSEL(Class cls, SEL originSEL,SEL newSEL) {
     Method originMethod = class_getInstanceMethod(cls, originSEL);
     Method swizzledMethod = class_getInstanceMethod(cls, newSEL);

@@ -65,10 +65,6 @@
     barBackgroundView.yyy_custom_alpha = @(barBackgroundAlpha);
 }
 
-- (void)yyy_updateBarHeight:(CGFloat)height {
-
-}
-
 - (void)yyy_updateBarTintColor:(UIColor *)tintColor {
     self.tintColor = tintColor;
 }
@@ -97,9 +93,17 @@
     }
     for (UIView *view in self.subviews) {
         if ([view isMemberOfClass:cls]) {
-            for (UILabel *lbl in view.subviews) {
-                if ([lbl isMemberOfClass:[UILabel class]]) {
+            for (UIView *subView in view.subviews) {
+                if ([subView isMemberOfClass:[UILabel class]]) {
+                    UILabel *lbl = (UILabel *)subView;
                     lbl.textColor = titleColor;
+                } else if ([subView isMemberOfClass:[UIView class]]) {
+                    if (subView.subviews.count == 1) {
+                        UILabel *titleLabel = subView.subviews.firstObject;
+                        if ([titleLabel isMemberOfClass:[UILabel class]]) {
+                            titleLabel.textColor = titleColor;
+                        }
+                    }
                 }
             }
         }
@@ -107,7 +111,14 @@
 
     //修改大标题字体颜色
     if (@available(iOS 11, *)) {
-        self.largeTitleTextAttributes = self.titleTextAttributes;
+        NSDictionary *largeTitleTextAttributes = [self largeTitleTextAttributes];
+        if (largeTitleTextAttributes == nil) {
+            self.largeTitleTextAttributes = @{NSForegroundColorAttributeName: titleColor};
+        } else {
+            NSMutableDictionary *newTitleTextAttributes = [largeTitleTextAttributes mutableCopy];
+            newTitleTextAttributes[NSForegroundColorAttributeName] = titleColor;
+            self.largeTitleTextAttributes = newTitleTextAttributes;
+        }
         Class largeClass = NSClassFromString(@"_UINavigationBarLargeTitleView");
         for (UIView *view in self.subviews) {
             if ([view isMemberOfClass:largeClass]) {
@@ -156,7 +167,6 @@
     if (backgroundView) {
         backgroundView.frame = [self yyy_UIBarBackgroundView].bounds;
         backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-
         if (backgroundView.superview) {
             if (backgroundView.superview == [self yyy_UIBarBackgroundView]) {
                 [[self yyy_UIBarBackgroundView] sendSubviewToBack:backgroundView];
@@ -170,7 +180,13 @@
     }
 }
 
-#pragma mark - 获取相应的View
+@end
+
+@implementation UINavigationBar (YYYNavigationBar_getView)
+
+- (__kindof UIView *)yyy_customBackgroundView {
+    return objc_getAssociatedObject(self, @selector(yyy_customBackgroundView));
+}
 
 - (UIView *)yyy_UIBarBackgroundView {
     Class cls = nil;
@@ -223,6 +239,15 @@
     return view;
 }
 
+- (UIImageView *)yyy_backgroundImageView {
+    UIImageView *imageView = self.yyy_customBackgroundView;
+    if (!imageView || ![imageView isKindOfClass:[UIImageView class]]) {
+        imageView = [UIImageView new];
+        [self yyy_updateBackgroundView:imageView];
+    }
+    return imageView;
+}
+
 - (UIImageView *)yyy_shadowImageView {
     UIImageView *shadowImageView = nil;
     UIView *backgroundView = [self yyy_UIBarBackgroundView];
@@ -233,19 +258,6 @@
         }
     }
     return shadowImageView;
-}
-
-- (UIImageView *)yyy_backgroundImageView {
-    UIImageView *imageView = self.yyy_customBackgroundView;
-    if (!imageView || ![imageView isKindOfClass:[UIImageView class]]) {
-        imageView = [UIImageView new];
-        [self yyy_updateBackgroundView:imageView];
-    }
-    return imageView;
-}
-
-- (__kindof UIView *)yyy_customBackgroundView {
-    return objc_getAssociatedObject(self, @selector(yyy_customBackgroundView));
 }
 
 @end

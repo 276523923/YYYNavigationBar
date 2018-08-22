@@ -7,6 +7,8 @@
 //
 
 #import "YYYNavigationManager.h"
+#import "YYYNavigationManagerProxy.h"
+#import "UINavigationController+YYYNavigationBar.h"
 
 @implementation YYYNavigationManager
 static YYYNavigationManager *manager__ = nil;
@@ -41,15 +43,44 @@ static YYYNavigationManager *manager__ = nil;
     return manager__;
 }
 
-+ (instancetype)newManager {
-    return [[self globalManager] copy];
+- (void)reloadNavigationBarStyle {
+    if (self.isShow && self.viewController && self.viewController.navigationController.navigationBar &&
+        self.viewController.navigationController != self.viewController) {
+        [self.viewController.navigationController yyy_updateNavigationBarWithViewController:self.viewController];
+        NSLog(@"after %@",@(self.navigationBarAlpha));
+    }
+}
+
+#pragma mark - NSCopying, NSMutableCopying
+- (id)copyWithZone:(NSZone *)zone {
+    YYYNavigationManager *manager = [[self.class allocWithZone:zone] init];
+    manager.navigationBarTintColor = manager__.navigationBarTintColor;
+    manager.navigationBarBarTintColor = manager__.navigationBarBarTintColor;
+    manager.navigationBarTitleColor = manager__.navigationBarTitleColor;
+    manager.navigationBarAlpha = manager__.navigationBarAlpha;;
+    manager.navigationBarShadowImageColor = manager__.navigationBarShadowImageColor;
+    manager.hiddenNavigationBar = manager__.hiddenNavigationBar;
+    manager.backgroundImage = manager__.backgroundImage;
+    manager.customBarBackgroundView = manager__.customBarBackgroundView;
+    manager.statusBarStyle = manager__.statusBarStyle;
+    return [YYYNavigationManagerProxy proxyWithTarget:manager];
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone {
+    return [self copyWithZone:zone];
+}
+
+#pragma mark - set, get
+
+- (void)setNavigationBarAlpha:(CGFloat)navigationBarAlpha {
+    _navigationBarAlpha = MAX(MIN(navigationBarAlpha, 1), 0);
 }
 
 #if DEBUG
-
 - (NSString *)description {
     return [NSString stringWithFormat:
-            @"navigationBarTintColor:%@\n\
+            @"%@:{\n\
+            navigationBarTintColor:%@\n\
             navigationBarBarTintColor:%@\n\
             navigationBarTitleColor:%@\n\
             navigationBarAlpha:%@\n\
@@ -58,7 +89,8 @@ static YYYNavigationManager *manager__ = nil;
             customBarBackgroundView:%@\n\
             statusBarStyle:%@\n\
             hiddenNavigationBar:%@\n\
-            navigationBarHeight:%@\n,",
+            navigationBarHeight:%@\n}",
+            self.class,
             self.navigationBarTintColor,
             self.navigationBarBarTintColor,
             self.navigationBarTitleColor,
@@ -75,33 +107,6 @@ static YYYNavigationManager *manager__ = nil;
 - (NSString *)debugDescription {
     return [self description];
 }
-
 #endif
-
-#pragma mark - NSCopying, NSMutableCopying
-
-- (id)copyWithZone:(NSZone *)zone {
-    YYYNavigationManager *manager = [[self.class allocWithZone:zone] init];
-    manager.navigationBarTintColor = manager__.navigationBarTintColor;
-    manager.navigationBarBarTintColor = manager__.navigationBarBarTintColor;
-    manager.navigationBarTitleColor = manager__.navigationBarTitleColor;
-    manager.navigationBarAlpha = manager__.navigationBarAlpha;;
-    manager.navigationBarShadowImageColor = manager__.navigationBarShadowImageColor;
-    manager.hiddenNavigationBar = manager__.hiddenNavigationBar;
-    manager.backgroundImage = manager__.backgroundImage;
-    manager.customBarBackgroundView = manager__.customBarBackgroundView;
-    manager.statusBarStyle = manager__.statusBarStyle;
-    return manager;
-}
-
-- (id)mutableCopyWithZone:(NSZone *)zone {
-    return [self copyWithZone:zone];
-}
-
-#pragma mark - set, get
-
-- (void)setNavigationBarAlpha:(CGFloat)navigationBarAlpha {
-    _navigationBarAlpha = MAX(MIN(navigationBarAlpha, 1), 0);
-}
 
 @end

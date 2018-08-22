@@ -21,6 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     [YYYNavigationManager globalManager].customBarBackgroundView = [BarBackgroundView new];
+    [YYYNavigationManager globalManager].navigationBarBarTintColor = [UIColor cyanColor];
     if (@available(iOS 11, *)) {
         [UIScrollView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         [UITableView appearance].estimatedRowHeight = 0;

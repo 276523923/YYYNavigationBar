@@ -11,18 +11,9 @@
 
 @interface UIViewController (YYYNavigationBar)
 
+/**
+ 默认 yyy_navigationManager = [self.navigationController.yyy_navigationManager copy];
+ */
 @property (nonatomic, strong, readonly) YYYNavigationManager *yyy_navigationManager;
-
-@property (nonatomic, strong) UIColor *yyy_navigationBarTintColor;
-@property (nonatomic, strong) UIColor *yyy_navigationBarBarTintColor;
-@property (nonatomic, strong) UIColor *yyy_navigationBarTitleColor;
-@property (nonatomic, assign) CGFloat yyy_navigationBarAlpha;
-@property (nonatomic, assign) UIStatusBarStyle yyy_preferredStatusBarStyle;
-@property (nonatomic, strong) UIColor *yyy_navigationBarShadowImageColor;
-@property (nonatomic) CGFloat yyy_navigationBarHeight;
-@property (nonatomic, strong) UIImage *yyy_backgroundImage;
-@property (nonatomic) BOOL yyy_hiddenNavigationBar;
-
-@property (nonatomic, strong) UIView *yyy_customBarBackgroundView;
 
 @end
